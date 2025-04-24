@@ -113,7 +113,7 @@
     <!-- Footer -->
     <footer class="bg-base-100 shadow-lg p-4">
         <div class="text-center">
-            <p>&copy; 2025 MyApp. All Rights Reserved.</p>
+            <p>&copy; 2025 KaryaNusantara. All Rights Reserved.</p>
         </div>
     </footer>
 
