@@ -15,7 +15,7 @@
     <header class="bg-base-100 shadow-lg">
         <div class="navbar">
             <div class="navbar-start">
-                <a href="{{ route('admin.index') }}" class="btn btn-ghost normal-case text-xl">My App</a>
+                <a href="{{ route('admin.index') }}" class="btn btn-ghost normal-case text-xl">KaryaNusantara</a>
             </div>
             <div class="navbar-center hidden lg:flex">
                 <ul class="menu menu-horizontal px-1 gap-2">
@@ -34,7 +34,7 @@
 
                     <!-- Menu User -->
                     <li>
-                        <a href="#"
+                        <a href="{{ route('admin.users.index') }}"
                             class="text-sm font-medium hover:bg-base-200 hover:text-primary [&.active]:bg-primary [&.active]:text-white">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">

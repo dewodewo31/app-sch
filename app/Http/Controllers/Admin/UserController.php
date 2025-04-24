@@ -1,11 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\AddUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\Classroom;
+use App\Models\Student;
+use App\Models\Subject;
+use App\Models\Teacher;
 use App\Models\User;
-
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -32,14 +38,56 @@ class UserController extends Controller
      */
     public function store(AddUserRequest $request)
     {
-        if ($request->validated()) {
-            User::create($request->validated());
-            return redirect()->route('admin.users.index')->with([
-                'success' => 'Data User Berhasil Tersimpan'
+        DB::beginTransaction();
+        try {
+            $validated = $request->validated();
+
+            // Buat User
+            $user = User::create([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'password' => bcrypt($validated['password']),
+                'role' => $validated['role'],
             ]);
+
+            // Handle Student
+            if ($user->role === 'student') {
+                $classroom = Classroom::firstOrFail();
+
+                Student::create([
+                    'user_id' => $user->id,
+                    'name' => $user->name,
+                    'classroom_id' => $classroom->id,
+                    'gender' => 'L',
+                    'birth_date' => now(),
+                    'birth_place' => '-',
+                    'address' => '-',
+                    'religion' => 'Islam'
+                ]);
+            }
+
+            // Handle Teacher
+            if ($user->role === 'teacher') {
+                $subject = Subject::firstOrFail();
+
+                Teacher::create([
+                    'user_id' => $user->id,
+                    'name' => $user->name,
+                    'subject_id' => $subject->id,
+                    'birth_date' => now(),
+                    'birth_place' => '-',
+                    'address' => '-',
+                    'certificate_number' => '-'
+                ]);
+            }
+
+            DB::commit();
+            return redirect()->route('admin.users.index')->with('success', 'User berhasil dibuat');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->withInput()->with('error', 'Gagal membuat user: ' . $e->getMessage());
         }
     }
-
     /**
      * Display the specified resource.
      */
