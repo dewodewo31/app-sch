@@ -101,9 +101,14 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        $student = $user->student;
+        $teacher = $user->teacher;
+
         return view('admin.users.edit')->with([
-            'user' => $user
-        ]);;
+            'user' => $user,
+            'student' => $student,
+            'teacher' => $teacher,
+        ]);
     }
 
     /**
@@ -111,12 +116,48 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        if ($request->validated()) {
-            $user->update($request->validated());
-            return redirect()->route('admin.users.index')->with([
-                'success' => 'Data User Berhasil Diedit'
+        // Validate the request
+        $validated = $request->validated();
+
+        // Update the user
+        $user->update($validated);
+
+        // Handle Student
+        if ($user->role === 'student') {
+            $student = $user->student; // Retrieve the associated student record
+            $student->update([
+                'name' => $validated['name'], // Update name from validated data
+                'gender' => $request->input('gender') ?? 'Not-Picked', // Assuming you have this field in your request
+                'birth_date' => $request->input('birth_date', '01/01/2000'), // Assuming you have this field in your request
+                'birth_place' => $request->input('birth_place', '-'), // Default to '-' if not provided
+                'address' => $request->input('address', '-'), // Default to '-' if not provided
+                'religion' => $request->input('religion', '-'), // Default to 'Islam' if not provided
+                'phone' => $request->input('phone'), // Optional field
+                'photo' => $request->input('photo'), // Optional field
+                // Add any other fields you want to update
             ]);
         }
+
+        // Handle Teacher
+        if ($user->role === 'teacher') {
+            $teacher = $user->teacher; // Ambil record guru yang terkait
+            $teacher->update([
+                'name' => $validated['name'], // Perbarui nama dari data yang divalidasi
+                'birth_date' => $request->input('birth_date', '01/01/2000'), // Gunakan NULL jika tidak ada nilai
+                'birth_place' => $request->input('birth_place', '-'), // Default ke '-' jika tidak ada
+                'address' => $request->input('address', '-'), // Default ke '-' jika tidak ada
+                'phone' => $request->input('phone'), // Field opsional
+                'photo' => $request->input('photo'), // Field opsional
+                'certificate_number' => $request->input('certificate_number', '-'), // Gunakan '-' jika tidak ada nilai
+                'certification_date' => $request->input('certification_date') ?: null, // Gunakan NULL jika tidak ada nilai
+                'certification_institution' => $request->input('certification_institution', '-'), // Default ke '-' jika tidak ada
+                // Tambahkan field lain yang ingin Anda perbarui
+            ]);
+        }
+
+        return redirect()->route('admin.users.index')->with([
+            'success' => 'Data User Berhasil Diedit'
+        ]);
     }
 
     /**
