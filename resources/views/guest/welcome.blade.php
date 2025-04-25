@@ -15,7 +15,7 @@
             <a href="/" class="text-xl font-bold">Karya Nusantara</a>
         </div>
         <div class="flex-none">
-            <a href="#" class="btn btn-primary">Login Admin</a>
+            <a href="{{ route('admin.login') }}" class="btn btn-primary">Login Admin</a>
         </div>
     </div>
 
