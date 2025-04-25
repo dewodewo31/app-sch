@@ -60,7 +60,8 @@
                             <ul class="p-2 bg-base-100 shadow-lg rounded-box z-50">
                                 <!-- Submenu Guru -->
                                 <li>
-                                    <a href="#" class="text-sm hover:bg-base-200 hover:text-primary">
+                                    <a href="{{ route('admin.teachers.index') }}"
+                                        class="text-sm hover:bg-base-200 hover:text-primary">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
                                             viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -72,7 +73,8 @@
 
                                 <!-- Submenu Murid -->
                                 <li>
-                                    <a href="#" class="text-sm hover:bg-base-200 hover:text-primary">
+                                    <a href="{{ route('admin.students.index') }}"
+                                        class="text-sm hover:bg-base-200 hover:text-primary">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
                                             viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

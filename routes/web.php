@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\UserController;
-
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -27,4 +28,7 @@ Route::middleware('admin')->group(function () {
             'destroy' => 'admin.users.destroy',
         ]
     ]);
+
+    Route::get('students', [StudentController::class, 'index'])->name('admin.students.index');
+    Route::get('teacher', [TeacherController::class, 'index'])->name('admin.teachers.index');
 });
