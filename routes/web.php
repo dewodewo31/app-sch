@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ClassroomController;
+use App\Http\Controllers\MajorController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +39,17 @@ Route::middleware('admin')->group(function () {
             'edit' => 'admin.classrooms.edit',
             'update' => 'admin.classrooms.update',
             'destroy' => 'admin.classrooms.destroy',
+        ]
+    ]);
+
+    Route::resource('majors', MajorController::class, [
+        'names' => [
+            'index' => 'admin.majors.index',
+            'create' => 'admin.majors.create',
+            'store' => 'admin.majors.store',
+            'edit' => 'admin.majors.edit',
+            'update' => 'admin.majors.update',
+            'destroy' => 'admin.majors.destroy',
         ]
     ]);
 
