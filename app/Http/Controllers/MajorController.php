@@ -53,7 +53,7 @@ class MajorController extends Controller
      */
     public function edit(Major $major)
     {
-        return view('admin.majors.edit');
+        return view('admin.majors.edit', compact('major'));
     }
 
     /**
@@ -61,12 +61,10 @@ class MajorController extends Controller
      */
     public function update(UpdateMajorRequest $request, Major $major)
     {
-        if ($request->validated()) {
-            $major->update($request->validated());
-            return redirect()->route('admin.majors.edit')->with([
-                'success' => 'Data Berhasil  di Update'
-            ]);
-        }
+        $major->update($request->validated());
+        return redirect()->route('admin.majors.edit', $major)->with([
+            'success' => 'Data Berhasil di Update'
+        ]);
     }
 
     /**
