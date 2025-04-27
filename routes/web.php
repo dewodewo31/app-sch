@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ClassroomController;
+use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\MajorController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
@@ -50,6 +51,18 @@ Route::middleware('admin')->group(function () {
             'edit' => 'admin.majors.edit',
             'update' => 'admin.majors.update',
             'destroy' => 'admin.majors.destroy',
+        ]
+    ]);
+
+    Route::resource('enrollments', EnrollmentController::class, [
+        'names' => [
+            'index' => 'admin.enrollments.index',
+            'create' => 'admin.enrollments.create',
+            'store' => 'admin.enrollments.store',
+            'show' => 'admin.enrollments.show',
+            'edit' => 'admin.enrollments.edit',
+            'update' => 'admin.enrollments.update',
+            'destroy' => 'admin.enrollments.destroy',
         ]
     ]);
 

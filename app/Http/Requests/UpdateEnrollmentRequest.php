@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class UpdateMajorRequest extends FormRequest
+class UpdateEnrollmentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +23,14 @@ class UpdateMajorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|max:255|unique:majors,name,' . $this->route('major')->id
+            'student_id' => [
+                'required',
+                'exists:students,id',
+                Rule::unique('enrollments')
+                    ->where('classroom_id', $this->classroom_id)
+                    ->ignore($this->enrollment->id)
+            ],
+            'classroom_id' => 'required|exists:classrooms,id'
         ];
     }
 }
