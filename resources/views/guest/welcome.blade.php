@@ -12,9 +12,11 @@
 
     <div class="navbar bg-base-200 px-6">
         <div class="flex-1">
-            <a href="/" class="text-xl font-bold">Karya Nusantara</a>
+            <a href="/" class="text-xl font-bold text-primary">Karya Nusantara</a>
         </div>
-        <div class="flex-none">
+        <div class="flex-none space-x-4">
+            <a href="{{ route('guest.news.index') }}"
+                class="text-lg font-semibold hover:text-primary transition duration-200">Portal Berita</a>
             <a href="{{ route('admin.login') }}" class="btn btn-primary">Login Admin</a>
         </div>
     </div>

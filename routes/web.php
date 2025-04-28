@@ -5,7 +5,9 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\MajorController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,6 +17,7 @@ Route::get('/', function () {
 
 Route::get('login', [AdminController::class, 'login'])->name('admin.login');
 Route::post('admin/auth', [AdminController::class, 'auth'])->name('admin.auth');
+Route::get('/news', [NewsController::class, 'index'])->name('guest.news.index');
 
 Route::middleware('admin')->group(function () {
     Route::get('admin/dashboard', [AdminController::class, 'index'])
@@ -66,6 +69,19 @@ Route::middleware('admin')->group(function () {
         ]
     ]);
 
+    Route::resource('subjects', SubjectController::class, [
+        'names' => [
+            'index' => 'admin.subjects.index',
+            'create' => 'admin.subjects.create',
+            'store' => 'admin.subjects.store',
+            'show' => 'admin.subjects.show',
+            'edit' => 'admin.subjects.edit',
+            'update' => 'admin.subjects.update',
+            'destroy' => 'admin.subjects.destroy',
+        ]
+    ]);
+
     Route::get('students', [StudentController::class, 'index'])->name('admin.students.index');
+    Route::get('student/{student}', [StudentController::class, 'show'])->name('admin.students.show');
     Route::get('teacher', [TeacherController::class, 'index'])->name('admin.teachers.index');
 });
