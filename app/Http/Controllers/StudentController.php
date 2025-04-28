@@ -24,4 +24,11 @@ class StudentController extends Controller
             'classrooms' => Classroom::all(),
         ]);
     }
+
+    public function show(Student $student)
+    {
+        return view('admin.students.show', [
+            'student' => $student->load(['classroom'])
+        ]);
+    }
 }

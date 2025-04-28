@@ -31,12 +31,13 @@
                             <th>Kelas</th>
                             <th>Foto</th>
                             <th>Dibuat Pada</th>
+                            <th class="text-center">Aksi</th> <!-- Tambah kolom aksi -->
                         </tr>
                     </thead>
                     <tbody>
                         @if ($students->isEmpty())
                             <tr>
-                                <td colspan="12">
+                                <td colspan="13"> <!-- Update colspan menjadi 13 -->
                                     <div role="alert" class="alert alert-error">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current"
                                             fill="none" viewBox="0 0 24 24">
@@ -78,6 +79,15 @@
                                     @endif
                                 </td>
                                 <td>{{ $student->created_at->format('d/m/Y H:i') }}</td>
+                                <td>
+                                    <div class="flex justify-center gap-2">
+                                        <!-- Tombol Detail -->
+                                        <a href="{{ route('admin.students.show', $student) }}"
+                                            class="btn btn-square btn-sm btn-info hover:scale-105 transition-transform">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                    </div>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
